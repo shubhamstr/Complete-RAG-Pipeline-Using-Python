@@ -39,15 +39,27 @@ print(f"Indexed {len(chunks)} chunks\n")
 # searching
 
 # k defines how many chunks we want to fetch
-def retreive(question, k=3):
+def retrieve(question, k=3):
     q = embed([question])[0]
     scores = chunk_vectors @ q / (np.linalg.norm(chunk_vectors, axis=1) * np.linalg.norm(q))
     return [chunks[i] for i in np.argsort(scores)[::-1][:k]]
 
 
 while True:
-    question = input("Ask: ")
-    context = "\n\n".join(retreive(question))
+    try:
+        question = input("Ask: ").strip()
+    except (KeyboardInterrupt, EOFError):
+        print("\nGoodbye!")
+        break
+
+    if not question:
+        continue
+
+    if question.lower() in ("exit", "quit", "q"):
+        print("Goodbye!")
+        break
+
+    context = "\n\n".join(retrieve(question))
     print("\n---Content Start---\n" + context + "\n---Content End---\n")
     prompt = f"""Answer the question using ONLY the context below. 
     If the answer isn't in the context, say "I don't know".

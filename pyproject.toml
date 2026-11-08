@@ -1,7 +1,7 @@
 [project]
-name = "python-rag"
+name = "complete-rag-pipeline-using-python"
 version = "0.1.0"
-description = "Add your description here"
+description = "Complete RAG pipeline using Python without any frameworks or tools from scratch"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
